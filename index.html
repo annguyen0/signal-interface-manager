@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Workspace Signal-Interface</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quản lý Signal-Interface</h1>
+        
+        <div class="workspace-selector">
+            <label for="workspace">Chọn Workspace:</label>
+            <select id="workspace">
+                <option value="">-- Chọn Workspace --</option>
+                <option value="workspace1">Workspace 1</option>
+                <option value="workspace2">Workspace 2</option>
+                <option value="workspace3">Workspace 3</option>
+            </select>
+        </div>
+        
+        <div id="workspace-content" style="display: none;">
+            <div class="filter-options">
+                <label for="baseline-filter">Lọc theo Baseline:</label>
+                <select id="baseline-filter">
+                    <option value="">-- Tất cả Baseline --</option>
+                </select>
+                
+                <button class="reset-filter" onclick="resetFilter()">Đặt lại bộ lọc</button>
+            </div>
+            
+            <table id="signal-interface-table">
+                <thead>
+                    <tr>
+                        <th width="15%">Signal</th>
+                        <th width="15%">Interface</th>
+                        <th width="10%">Baseline</th>
+                        <th width="30%">Logic Conversion</th>
+                        <th width="15%">Thời gian cập nhật</th>
+                        <th width="10%">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be added here -->
+                </tbody>
+            </table>
+            
+            <div class="button-group">
+                <button class="add-row" onclick="addNewRow()">Thêm dòng mới</button>
+                <button class="save-btn" onclick="saveData()">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
