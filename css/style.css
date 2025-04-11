@@ -1,0 +1,124 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.workspace-selector {
+    margin-bottom: 20px;
+}
+
+.workspace-selector select,
+.filter-options select {
+    padding: 10px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.filter-options {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.filter-options label {
+    white-space: nowrap;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+select, textarea, input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.add-row, .save-btn, .reset-filter {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    color: white;
+}
+
+.add-row {
+    background-color: #4CAF50;
+}
+
+.add-row:hover {
+    background-color: #45a049;
+}
+
+.save-btn {
+    background-color: #2196F3;
+}
+
+.save-btn:hover {
+    background-color: #0b7dda;
+}
+
+.reset-filter {
+    background-color: #ff9800;
+}
+
+.reset-filter:hover {
+    background-color: #e68a00;
+}
+
+.row-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.row-actions button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.timestamp {
+    font-size: 0.9em;
+    color: #666;
+}
