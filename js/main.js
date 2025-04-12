@@ -16,15 +16,20 @@ window.resetFilter = resetFilter;
 window.undoDelete = undoDelete;
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // Setup workspace selector event
     document.getElementById('workspace').addEventListener('change', handleWorkspaceChange);
     
     // Setup baseline filter event
     document.getElementById('baseline-filter').addEventListener('change', handleBaselineFilterChange);
     
-    // Load workspaces from localStorage nếu có
-    loadWorkspaces();
+    // Load workspaces từ Firebase
+    try {
+        await loadWorkspaces();
+    } catch (error) {
+        console.error('Initial load error:', error);
+        showToast('Không thể kết nối đến database', 'error');
+    }
 
     // Thêm xử lý sự kiện khi nhấn phím Escape để đóng modal
     document.addEventListener('keydown', function(event) {

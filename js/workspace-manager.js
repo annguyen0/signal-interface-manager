@@ -1,25 +1,48 @@
-import { workspaceData, state } from './config.js';
+import { workspaceData, nextWorkspaceId, state } from './config.js';
 import { updateBaselineFilter, resetFilter } from './filter-manager.js';
 import { addRowWithData, saveInitialState } from './table-manager.js';
 import { showToast, closeCreateWorkspaceModal } from './ui-manager.js';
 import { formatDateTime } from './helpers.js';
+import { db, ref, set, onValue } from './firebase-init.js';
 
-// Workspace management functions
+// Hàm load workspaces từ Firebase
 export function loadWorkspaces() {
-    // Kiểm tra nếu có dữ liệu được lưu trong localStorage
-    const savedWorkspaces = localStorage.getItem('workspaceData');
-    const savedNextId = localStorage.getItem('nextWorkspaceId');
-    
-    if (savedWorkspaces) {
-        Object.assign(workspaceData, JSON.parse(savedWorkspaces));
+    return new Promise((resolve) => {
+        onValue(ref(db, 'workspaceData'), (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                // Clear existing data
+                Object.keys(workspaceData).forEach(key => delete workspaceData[key]);
+                
+                // Add new data
+                Object.assign(workspaceData, data.workspaceData);
+                nextWorkspaceId = data.nextWorkspaceId || 1;
+                
+                updateWorkspaceList();
+                showToast('Dữ liệu đã được tải từ server', 'success');
+            }
+            resolve();
+        }, (error) => {
+            console.error('Error loading data:', error);
+            showToast('Lỗi khi tải dữ liệu từ server', 'error');
+            resolve();
+        });
+    });
+}
+
+// Hàm lưu workspaces lên Firebase
+export async function saveWorkspacesToServer() {
+    try {
+        await set(ref(db, 'workspaceData'), {
+            workspaceData,
+            nextWorkspaceId
+        });
+        showToast('Dữ liệu đã được lưu lên server', 'success');
+    } catch (error) {
+        console.error('Error saving data:', error);
+        showToast('Lỗi khi lưu dữ liệu lên server', 'error');
+        throw error;
     }
-    
-    if (savedNextId) {
-        state.nextWorkspaceId = parseInt(savedNextId);
-    }
-    
-    // Cập nhật danh sách workspace trong select box
-    updateWorkspaceList();
 }
 
 export function updateWorkspaceList() {
@@ -64,7 +87,7 @@ export function createNewWorkspace() {
     workspaceData[newWorkspaceId] = [];
     
     // Lưu dữ liệu vào localStorage
-    saveWorkspacesToStorage();
+    saveWorkspacesToServer();
     
     // Cập nhật danh sách workspace
     updateWorkspaceList();
@@ -78,7 +101,7 @@ export function createNewWorkspace() {
     showToast(`Đã tạo workspace ${workspaceName} thành công`, 'success');
 }
 
-export function saveWorkspacesToStorage() {
+export function saveWorkspacesToServer() {
     localStorage.setItem('workspaceData', JSON.stringify(workspaceData));
     localStorage.setItem('nextWorkspaceId', state.nextWorkspaceId.toString());
 }
@@ -150,7 +173,7 @@ export function saveData() {
     saveInitialState();
     
     // Lưu dữ liệu vào localStorage
-    saveWorkspacesToStorage();
+    saveWorkspacesToServer();
     
     showToast('Đã lưu thành công!', 'success');
 }
