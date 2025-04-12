@@ -1,0 +1,25 @@
+/* css/components/_filters.css */
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    align-items: center;
+    background-color: var(--gray-light);
+    padding: 20px;
+    border-radius: var(--radius-sm);
+}
+
+.filter-options label {
+    white-space: nowrap;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Nút reset filter được style trong _buttons.css */

@@ -1,0 +1,14 @@
+/* css/animations.css */
+
+/* Animation for adding a new row */
+@keyframes highlightRow {
+    0% { background-color: rgba(46, 204, 113, 0.2); }
+    100% { background-color: transparent; } /* Hoặc màu nền gốc của row nếu có */
+}
+
+.highlight-row {
+    animation: highlightRow 2s ease;
+}
+
+/* Các keyframes fadeIn, slideIn của modal đã được chuyển vào _modal.css */
+/* Keyframe fadeOut của toast đã được chuyển vào _toast.css */

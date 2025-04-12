@@ -1,0 +1,27 @@
+/* css/components/_badge.css */
+
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-primary {
+    background-color: rgba(52, 152, 219, 0.15);
+    color: var(--primary-dark);
+}
+
+.badge-success {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: var(--secondary-dark);
+}
+
+.badge-warning {
+    background-color: rgba(243, 156, 18, 0.15);
+    color: var(--warning-dark);
+}

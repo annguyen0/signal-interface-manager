@@ -1,0 +1,75 @@
+/* css/responsive.css */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px auto; /* Giảm margin trên mobile */
+    }
+
+    .workspace-header {
+        flex-direction: column;
+        align-items: flex-start; /* Căn trái label và button */
+        gap: 15px;
+    }
+
+    .create-workspace-btn { /* Nút tạo workspace chiếm full width */
+        width: 100%;
+        justify-content: center; /* Căn giữa text+icon trong nút */
+    }
+
+    .filter-options {
+        flex-direction: column;
+        align-items: stretch; /* Các filter group chiếm full width */
+    }
+
+    .filter-group {
+        width: 100%;
+        min-width: unset; /* Reset min-width */
+    }
+
+     .filter-options .reset-filter { /* Nút reset filter chiếm full width */
+        width: 100%;
+    }
+
+    /* Cho phép table cuộn ngang */
+    #signal-interface-table { /* Target table cụ thể hơn */
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap; /* Ngăn text trong cell xuống dòng đột ngột */
+        -webkit-overflow-scrolling: touch; /* Cuộn mượt hơn trên iOS */
+    }
+
+    th, td {
+        min-width: 150px; /* Tăng min-width để dễ đọc hơn khi cuộn */
+        white-space: normal; /* Cho phép nội dung cell xuống dòng */
+        padding: 12px; /* Giảm padding chút */
+    }
+
+     th:first-child, td:first-child {
+        min-width: 180px; /* Có thể cần điều chỉnh riêng cho cột đầu */
+     }
+
+    .button-group {
+        flex-direction: column;
+        gap: 10px; /* Giảm gap */
+    }
+
+     .button-group button { /* Các nút chính chiếm full width */
+        width: 100%;
+     }
+
+    .modal-content {
+        width: 95%; /* Tăng width modal trên mobile */
+        margin: 5% auto; /* Giảm margin top */
+        padding: 20px; /* Giảm padding */
+    }
+
+    .form-actions { /* Nút trong modal cũng xếp chồng */
+        flex-direction: column;
+        gap: 10px;
+    }
+
+     .form-actions button {
+         width: 100%;
+     }
+}

@@ -1,0 +1,114 @@
+/* css/components/_buttons.css */
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    justify-content: flex-end;
+}
+
+button {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* Nút dùng chung màu chữ trắng */
+.add-row, .save-btn, .reset-filter, .create-workspace-btn, .confirm-btn {
+    color: white;
+}
+
+/* Nút Add Row */
+.add-row {
+    background-color: var(--secondary-color);
+}
+.add-row:hover {
+    background-color: var(--secondary-dark);
+    box-shadow: var(--shadow-sm);
+}
+.add-row:before {
+    content: "+";
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+/* Nút Save, Confirm (trong modal) */
+.save-btn, .confirm-btn {
+    background-color: var(--primary-color);
+}
+.save-btn:hover, .confirm-btn:hover {
+    background-color: var(--primary-dark);
+    box-shadow: var(--shadow-sm);
+}
+.save-btn:before {
+    content: "✓";
+    margin-right: 8px;
+}
+
+/* Nút Reset Filter */
+.reset-filter {
+    background-color: var(--warning-color);
+}
+.reset-filter:hover {
+    background-color: var(--warning-dark);
+    box-shadow: var(--shadow-sm);
+}
+.reset-filter:before {
+    content: "↺";
+    margin-right: 8px;
+}
+
+/* Nút Create Workspace */
+.create-workspace-btn {
+    background-color: var(--accent-color);
+    white-space: nowrap;
+}
+.create-workspace-btn:hover {
+    background-color: var(--accent-dark);
+    box-shadow: var(--shadow-sm);
+}
+.create-workspace-btn:before {
+    content: "+";
+    margin-right: 8px;
+    font-weight: bold;
+}
+
+/* Nút Cancel (trong modal) */
+.cancel-btn {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--gray-medium);
+    background-color: white;
+    color: var(--text-primary);
+}
+.cancel-btn:hover {
+    background-color: var(--gray-light);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Nút trong Table Row Actions (Delete) */
+.row-actions {
+    display: flex;
+    gap: 8px;
+}
+.row-actions button { /* Target nút delete trong row actions */
+    padding: 8px 12px; /* Kích thước nhỏ hơn */
+    background-color: var(--danger-color);
+    color: white;
+    /* Kế thừa các style khác từ 'button' chung */
+}
+.row-actions button:hover {
+    background-color: var(--danger-dark);
+}

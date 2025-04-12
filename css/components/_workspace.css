@@ -1,0 +1,24 @@
+/* css/components/_workspace.css */
+
+.workspace-selector {
+    margin-bottom: 30px;
+    background-color: var(--gray-light);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.workspace-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.workspace-header label {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+/* Nút tạo workspace được style trong _buttons.css */

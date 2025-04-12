@@ -1,0 +1,60 @@
+/* css/components/_table.css */
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 25px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-medium);
+}
+
+th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    position: relative;
+}
+
+th:not(:last-child):after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background-color: var(--gray-light);
+}
+
+tbody tr {
+    transition: var(--transition);
+}
+
+/* Alternate row colors for better readability */
+tbody tr:nth-child(even) {
+    background-color: #f9fafc;
+}
+
+/* Timestamp style specific to table context */
+.timestamp {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
+/* Các nút trong table (delete) được style trong _buttons.css */
+/* Các select, textarea trong table sẽ kế thừa style từ _forms.css */

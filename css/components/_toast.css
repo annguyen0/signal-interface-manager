@@ -1,0 +1,45 @@
+/* css/components/_toast.css */
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333; /* Default background */
+    color: white;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Thêm transition cho transform */
+    z-index: 10000;
+    pointer-events: none; /* Để không bắt sự kiện chuột */
+}
+
+.toast.show {
+    opacity: 1;
+    pointer-events: auto; /* Cho phép tương tác khi hiển thị */
+}
+
+.toast-success {
+    background-color: var(--secondary-color);
+}
+
+.toast-error {
+    background-color: var(--danger-color);
+}
+
+.toast-info {
+    background-color: var(--primary-color);
+}
+
+/* Animation fade out (có thể để ở animations.css hoặc ở đây vì nó gắn với toast) */
+/* Để ở đây cho tiện quản lý toast */
+.fade-out {
+    animation: toastFadeOut 0.3s ease forwards;
+}
+
+@keyframes toastFadeOut {
+    from { opacity: 1; transform: translateX(-50%); /* Giữ nguyên vị trí ngang */ }
+    to { opacity: 0; transform: translateX(-50%) translateY(20px); /* Di chuyển xuống dưới khi ẩn */ }
+}
