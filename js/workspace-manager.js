@@ -101,10 +101,6 @@ export function createNewWorkspace() {
     showToast(`Đã tạo workspace ${workspaceName} thành công`, 'success');
 }
 
-export function saveWorkspacesToServer() {
-    localStorage.setItem('workspaceData', JSON.stringify(workspaceData));
-    localStorage.setItem('nextWorkspaceId', state.nextWorkspaceId.toString());
-}
 
 export function handleWorkspaceChange() {
     const workspaceId = this.value;
