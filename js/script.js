@@ -18,8 +18,9 @@ const workspaceData = {
 
 // Theo dõi ID workspace tiếp theo
 let nextWorkspaceId = 4;
-
 const initialStates = {};
+let lastDeletedRow = null;
+let lastDeletedRowData = null;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -41,6 +42,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // Setup search functionality
+    setupSearch();
 });
 
 // Các hàm quản lý workspaces
@@ -143,6 +147,7 @@ function createNewWorkspace() {
     
     // Đóng modal
     closeCreateWorkspaceModal();
+    showToast(`Đã tạo workspace ${workspaceName} thành công`, 'success');
 }
 
 function saveWorkspacesToStorage() {
@@ -272,9 +277,25 @@ function addRowWithData(signalValue, interfaceValue, baselineValue, logicValue, 
     const actionCell = document.createElement('td');
     const deleteButton = document.createElement('button');
     deleteButton.textContent = "Xóa";
+    deleteButton.className = "delete-btn";
     deleteButton.onclick = function() {
-        tableBody.removeChild(newRow);
-        updateBaselineFilter(document.getElementById('workspace').value);
+        if (confirm('Bạn có chắc chắn muốn xóa hàng này?')) {
+            lastDeletedRow = newRow;
+            lastDeletedRowData = {
+                signal: signalSelect.value,
+                interface: interfaceSelect.value,
+                baseline: baselineSelect.value,
+                logic: logicTextarea.value,
+                lastUpdated: timestampCell.textContent
+            };
+            
+            newRow.classList.add('fade-out');
+            setTimeout(() => {
+                tableBody.removeChild(newRow);
+                updateBaselineFilter(document.getElementById('workspace').value);
+                showToast('Đã xóa hàng. <button onclick="undoDelete()" class="undo-btn">Hoàn tác</button>', 'info');
+            }, 300);
+        }
     };
     actionCell.appendChild(deleteButton);
     
@@ -292,7 +313,32 @@ function addRowWithData(signalValue, interfaceValue, baselineValue, logicValue, 
         newRow.style.display = 'none';
     }
     
+    // Add highlight effect
+    newRow.classList.add('highlight-row');
+    setTimeout(() => {
+        newRow.classList.remove('highlight-row');
+    }, 2000);
+    
     tableBody.appendChild(newRow);
+    
+    // Scroll to new row
+    newRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function undoDelete() {
+    if (lastDeletedRow && lastDeletedRowData) {
+        addRowWithData(
+            lastDeletedRowData.signal,
+            lastDeletedRowData.interface,
+            lastDeletedRowData.baseline,
+            lastDeletedRowData.logic,
+            lastDeletedRowData.lastUpdated,
+            lastDeletedRow.dataset.rowIndex
+        );
+        showToast('Đã khôi phục hàng', 'success');
+        lastDeletedRow = null;
+        lastDeletedRowData = null;
+    }
 }
 
 function saveData() {
@@ -338,7 +384,7 @@ function saveData() {
     // Lưu dữ liệu vào localStorage
     saveWorkspacesToStorage();
     
-    alert('Đã lưu thành công!');
+    showToast('Đã lưu thành công!', 'success');
 }
 
 // Helper functions
@@ -368,4 +414,49 @@ function formatDateTime(date) {
     const seconds = String(date.getSeconds()).padStart(2, '0');
     
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 300);
+    }, 3000);
+}
+
+function setupSearch() {
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Tìm kiếm signal hoặc interface...';
+    searchInput.id = 'search-input';
+    searchInput.style.marginBottom = '15px';
+    searchInput.style.padding = '10px';
+    searchInput.style.width = '100%';
+    searchInput.style.borderRadius = 'var(--radius-sm)';
+    searchInput.style.border = '1px solid var(--gray-medium)';
+    
+    const contentDiv = document.getElementById('workspace-content');
+    contentDiv.insertBefore(searchInput, contentDiv.firstChild);
+    
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#signal-interface-table tbody tr');
+        
+        rows.forEach(row => {
+            const signal = row.querySelector('td:nth-child(1) select').value.toLowerCase();
+            const interface = row.querySelector('td:nth-child(2) select').value.toLowerCase();
+            const isVisible = signal.includes(searchTerm) || interface.includes(searchTerm);
+            row.style.display = isVisible ? '' : 'none';
+        });
+    });
 }
