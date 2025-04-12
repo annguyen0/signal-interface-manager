@@ -2,6 +2,7 @@ import { workspaceData, state } from './config.js';
 import { updateBaselineFilter, resetFilter } from './filter-manager.js';
 import { addRowWithData, saveInitialState } from './table-manager.js';
 import { showToast, closeCreateWorkspaceModal } from './ui-manager.js';
+import { formatDateTime } from './helpers.js';
 
 // Workspace management functions
 export function loadWorkspaces() {
@@ -148,7 +149,7 @@ export function saveData() {
         }
         
         if (signal && aswif) {
-            data.push({ signal, aswif, baseline, logic, lastUpdated });
+            data.push({ signal, ['interface']: aswif, baseline, logic, lastUpdated });
         }
     });
     
