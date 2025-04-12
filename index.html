@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý Workspace Signal-Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -12,8 +13,10 @@
         
         <div class="workspace-selector">
             <div class="workspace-header">
-                <label for="workspace">Chọn Workspace:</label>
-                <button class="create-workspace-btn" onclick="showCreateWorkspaceModal()">Tạo Workspace Mới</button>
+                <label for="workspace"><i class="fas fa-folder-open"></i> Chọn Workspace:</label>
+                <button class="create-workspace-btn" onclick="showCreateWorkspaceModal()">
+                    Tạo Workspace Mới
+                </button>
             </div>
             <select id="workspace">
                 <option value="">-- Chọn Workspace --</option>
@@ -25,23 +28,27 @@
         
         <div id="workspace-content" style="display: none;">
             <div class="filter-options">
-                <label for="baseline-filter">Lọc theo Baseline:</label>
-                <select id="baseline-filter">
-                    <option value="">-- Tất cả Baseline --</option>
-                </select>
+                <div class="filter-group">
+                    <label for="baseline-filter"><i class="fas fa-filter"></i> Lọc theo Baseline:</label>
+                    <select id="baseline-filter">
+                        <option value="">-- Tất cả Baseline --</option>
+                    </select>
+                </div>
                 
-                <button class="reset-filter" onclick="resetFilter()">Đặt lại bộ lọc</button>
+                <button class="reset-filter" onclick="resetFilter()">
+                    Đặt lại bộ lọc
+                </button>
             </div>
             
             <table id="signal-interface-table">
                 <thead>
                     <tr>
-                        <th width="15%">Signal</th>
-                        <th width="15%">Interface</th>
-                        <th width="10%">Baseline</th>
-                        <th width="30%">Logic Conversion</th>
-                        <th width="15%">Thời gian cập nhật</th>
-                        <th width="10%">Thao tác</th>
+                        <th width="15%"><i class="fas fa-broadcast-tower"></i> Signal</th>
+                        <th width="15%"><i class="fas fa-plug"></i> Interface</th>
+                        <th width="10%"><i class="fas fa-layer-group"></i> Baseline</th>
+                        <th width="30%"><i class="fas fa-code"></i> Logic Conversion</th>
+                        <th width="15%"><i class="fas fa-clock"></i> Thời gian cập nhật</th>
+                        <th width="10%"><i class="fas fa-cogs"></i> Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,7 +67,7 @@
     <div id="createWorkspaceModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeCreateWorkspaceModal()">&times;</span>
-            <h2>Tạo Workspace Mới</h2>
+            <h2><i class="fas fa-folder-plus"></i> Tạo Workspace Mới</h2>
             <form id="workspace-form" onsubmit="event.preventDefault(); createNewWorkspace();">
                 <div class="form-group">
                     <label for="new-workspace-name">Tên Workspace:</label>
