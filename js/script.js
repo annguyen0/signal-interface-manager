@@ -16,6 +16,9 @@ const workspaceData = {
     "workspace3": []
 };
 
+// Theo dõi ID workspace tiếp theo
+let nextWorkspaceId = 4;
+
 const initialStates = {};
 
 // Initialize the application
@@ -25,7 +28,127 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Setup baseline filter event
     document.getElementById('baseline-filter').addEventListener('change', handleBaselineFilterChange);
+    
+    // Load workspaces from localStorage nếu có
+    loadWorkspaces();
+
+    // Thêm xử lý sự kiện khi nhấn phím Escape để đóng modal
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const modal = document.getElementById('createWorkspaceModal');
+            if (modal.style.display === 'block') {
+                closeCreateWorkspaceModal();
+            }
+        }
+    });
 });
+
+// Các hàm quản lý workspaces
+function loadWorkspaces() {
+    // Kiểm tra nếu có dữ liệu được lưu trong localStorage
+    const savedWorkspaces = localStorage.getItem('workspaceData');
+    const savedNextId = localStorage.getItem('nextWorkspaceId');
+    
+    if (savedWorkspaces) {
+        Object.assign(workspaceData, JSON.parse(savedWorkspaces));
+    }
+    
+    if (savedNextId) {
+        nextWorkspaceId = parseInt(savedNextId);
+    }
+    
+    // Cập nhật danh sách workspace trong select box
+    updateWorkspaceList();
+}
+
+function updateWorkspaceList() {
+    const workspaceSelect = document.getElementById('workspace');
+    const selectedValue = workspaceSelect.value;
+    
+    // Lưu lại option đầu tiên (-- Chọn Workspace --)
+    const firstOption = workspaceSelect.options[0];
+    workspaceSelect.innerHTML = '';
+    workspaceSelect.appendChild(firstOption);
+    
+    // Thêm các workspace vào select box
+    for (const workspaceId in workspaceData) {
+        const option = document.createElement('option');
+        option.value = workspaceId;
+        
+        // Hiển thị tên workspace
+        if (workspaceId.startsWith('workspace')) {
+            const number = workspaceId.replace('workspace', '');
+            option.textContent = `Workspace ${number}`;
+        } else {
+            option.textContent = workspaceId;
+        }
+        
+        workspaceSelect.appendChild(option);
+    }
+    
+    // Khôi phục lại giá trị đã chọn trước đó
+    if (selectedValue && workspaceData[selectedValue]) {
+        workspaceSelect.value = selectedValue;
+    }
+}
+
+function showCreateWorkspaceModal() {
+    document.getElementById('createWorkspaceModal').style.display = 'block';
+    const nameInput = document.getElementById('new-workspace-name');
+    nameInput.value = '';
+    document.getElementById('workspace-error').textContent = '';
+    
+    // Focus vào ô input
+    setTimeout(() => {
+        nameInput.focus();
+    }, 100);
+    
+    // Thêm sự kiện input để xóa lỗi khi người dùng bắt đầu nhập lại
+    nameInput.oninput = function() {
+        document.getElementById('workspace-error').textContent = '';
+    };
+}
+
+function closeCreateWorkspaceModal() {
+    document.getElementById('createWorkspaceModal').style.display = 'none';
+}
+
+function createNewWorkspace() {
+    const nameInput = document.getElementById('new-workspace-name');
+    const errorElement = document.getElementById('workspace-error');
+    const workspaceName = nameInput.value.trim();
+    
+    // Validate tên workspace
+    if (!workspaceName) {
+        errorElement.textContent = 'Vui lòng nhập tên cho workspace mới.';
+        return;
+    }
+    
+    // Tạo ID cho workspace mới
+    const newWorkspaceId = `workspace${nextWorkspaceId}`;
+    nextWorkspaceId++;
+    
+    // Thêm workspace mới vào dữ liệu
+    workspaceData[newWorkspaceId] = [];
+    
+    // Lưu dữ liệu vào localStorage
+    saveWorkspacesToStorage();
+    
+    // Cập nhật danh sách workspace
+    updateWorkspaceList();
+    
+    // Chọn workspace vừa tạo
+    document.getElementById('workspace').value = newWorkspaceId;
+    document.getElementById('workspace').dispatchEvent(new Event('change'));
+    
+    // Đóng modal
+    closeCreateWorkspaceModal();
+}
+
+function saveWorkspacesToStorage() {
+    localStorage.setItem('workspaceData', JSON.stringify(workspaceData));
+    localStorage.setItem('nextWorkspaceId', nextWorkspaceId.toString());
+}
 
 // Event handlers
 function handleWorkspaceChange() {
@@ -211,6 +334,9 @@ function saveData() {
     workspaceData[workspaceId] = data;
     updateBaselineFilter(workspaceId);
     saveInitialState();
+    
+    // Lưu dữ liệu vào localStorage
+    saveWorkspacesToStorage();
     
     alert('Đã lưu thành công!');
 }

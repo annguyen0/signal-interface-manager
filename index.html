@@ -11,7 +11,10 @@
         <h1>Quản lý Signal-Interface</h1>
         
         <div class="workspace-selector">
-            <label for="workspace">Chọn Workspace:</label>
+            <div class="workspace-header">
+                <label for="workspace">Chọn Workspace:</label>
+                <button class="create-workspace-btn" onclick="showCreateWorkspaceModal()">Tạo Workspace Mới</button>
+            </div>
             <select id="workspace">
                 <option value="">-- Chọn Workspace --</option>
                 <option value="workspace1">Workspace 1</option>
@@ -50,6 +53,25 @@
                 <button class="add-row" onclick="addNewRow()">Thêm dòng mới</button>
                 <button class="save-btn" onclick="saveData()">Lưu thay đổi</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal để tạo workspace mới -->
+    <div id="createWorkspaceModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCreateWorkspaceModal()">&times;</span>
+            <h2>Tạo Workspace Mới</h2>
+            <form id="workspace-form" onsubmit="event.preventDefault(); createNewWorkspace();">
+                <div class="form-group">
+                    <label for="new-workspace-name">Tên Workspace:</label>
+                    <input type="text" id="new-workspace-name" placeholder="Nhập tên workspace mới..." required>
+                    <p class="error-message" id="workspace-error"></p>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeCreateWorkspaceModal()">Hủy</button>
+                    <button type="submit" class="confirm-btn">Tạo</button>
+                </div>
+            </form>
         </div>
     </div>
 
