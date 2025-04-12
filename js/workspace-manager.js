@@ -35,15 +35,7 @@ export function updateWorkspaceList() {
     for (const workspaceId in workspaceData) {
         const option = document.createElement('option');
         option.value = workspaceId;
-        
-        // Hiển thị tên workspace
-        if (workspaceId.startsWith('workspace')) {
-            const number = workspaceId.replace('workspace', '');
-            option.textContent = `Workspace ${number}`;
-        } else {
-            option.textContent = workspaceId;
-        }
-        
+        option.textContent = workspaceId;        
         workspaceSelect.appendChild(option);
     }
     
@@ -65,7 +57,7 @@ export function createNewWorkspace() {
     }
     
     // Tạo ID cho workspace mới
-    const newWorkspaceId = `workspace${state.nextWorkspaceId}`;
+    const newWorkspaceId = workspaceName;
     state.nextWorkspaceId++;
     
     // Thêm workspace mới vào dữ liệu
